@@ -1,5 +1,7 @@
+
 <!DOCTYPE html><html lang="ja"><head>
-<!-- Playables SDK -->
+<!-- Playables SD
+K -->
 <script>// Playables SDK v1.0.0
 // Game lifecycle bridge: rAF-based game-ready detection + event communication
 (function() {
@@ -225,7 +227,7 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
 .inputPanel.show{display:block}.inputPanel input{width:100%;padding:12px;border:2px solid #2563eb;border-radius:8px;margin-bottom:10px;font-size:16px;box-sizing:border-box}
 .inputPanel button{flex:1;height:36px;border:none;border-radius:6px;font-weight:600}
 .ok{background:#2563eb;color:#fff}.cancel{background:#e5e7eb}
-@media print{@page{size:A4;margin:4mm}html,body{height:auto!important;overflow:visible!important}body{background:#fff;-webkit-print-color-adjust:exact}.tools,.fab,.hint,.inputPanel,.btns,#tantoPanel{display:none!important}.app{display:block!important}.sidebar{width:100%!important;box-shadow:none!important}.head{padding:1mm 0;margin:0 0 1.5mm 0;border-bottom:0.6mm solid #000}.head h1{font-size:15pt;margin:0;font-weight:800}.form{display:block!important;padding:0!important;margin:0!important;font-size:13pt;line-height:1.2;page-break-after:always!important;height:283mm;overflow:hidden}.f{margin-bottom:1.4mm}.f label{font-size:10.5pt;margin-bottom:0.3mm;font-weight:700}.f input,.f select,.f textarea{padding:1.8mm 2mm;font-size:13pt;border:0.35mm solid #000;border-radius:1mm;height:8.8mm;box-sizing:border-box}textarea#biko{height:13mm!important}.grid2{gap:1.4mm}.chk label{padding:2mm 3.5mm;font-size:10.5pt}.mapwrap{display:block!important;position:relative!important;height:289mm!important;width:100%!important;page-break-before:always!important;padding-top:13mm!important;box-sizing:border-box;overflow:hidden}#map{position:absolute!important;top:13mm!important;left:-4mm!important;right:-4mm!important;bottom:-4mm!important;border:none!important;border-top:0.4mm solid #000!important}.map-print-header{display:block!important;position:absolute!important;top:0!important;left:-4mm!important;right:-4mm!important;height:13mm!important;padding:1mm 4mm 0.5mm 4mm;background:#fff;z-index:10;box-sizing:border-box}.map-print-header .main{font-size:14.5pt;font-weight:800;margin-bottom:1mm;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.map-print-header .sub{font-size:11.5pt;font-weight:600;line-height:1.15;white-space:normal;overflow:hidden;max-height:6mm}}
+@media print{@page{size:A4;margin:4mm}html,body{height:auto!important;overflow:visible!important}body{background:#fff;-webkit-print-color-adjust:exact}.tools,.fab,.hint,.inputPanel,.btns,#tantoPanel{display:none!important}.app{display:block!important}.sidebar{width:100%!important;box-shadow:none!important}.head{padding:1mm 0;margin:0 0 1.5mm 0;border-bottom:0.6mm solid #000}.head h1{font-size:15pt;margin:0;font-weight:800}.form{display:block!important;padding:0!important;margin:0!important;font-size:13pt;line-height:1.2;page-break-after:always!important;min-height:283mm;overflow:visible !important;}.f{margin-bottom:2.2mm}.f label{font-size:10.5pt;margin-bottom:0.3mm;font-weight:700}.f input,.f select,.f textarea{padding:1.8mm 2mm;font-size:13pt;border:0.35mm solid #000;border-radius:1mm;height:8.8mm;box-sizing:border-box}textarea#biko{height:20mm!important}.grid2{gap:1.4mm}.chk label{padding:2mm 3.5mm;font-size:10.5pt}.mapwrap{display:block!important;position:relative!important;height:289mm!important;width:100%!important;page-break-before:always!important;padding-top:13mm!important;box-sizing:border-box;overflow:hidden}#map{position:absolute!important;top:13mm!important;left:0!important;right:0!important;bottom:-4mm!important;border:none!important;border-top:0.4mm solid #000!important}.map-print-header{display:block!important;position:absolute!important;top:0!important;left:0!important;right:0!important;height:13mm!important;padding:1mm 4mm 0.5mm 4mm;background:#fff;z-index:10;box-sizing:border-box}.map-print-header .main{font-size:14.5pt;font-weight:800;margin-bottom:1mm;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.map-print-header .sub{font-size:11.5pt;font-weight:600;line-height:1.15;white-space:normal;overflow:hidden;max-height:6mm}}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head><body>
@@ -274,6 +276,7 @@ const layer=L.layerGroup().addTo(map);
 let tool=null,tmp=[],dot=null,stack=[];
 document.querySelectorAll('.tools button[data-t]').forEach(b=>b.onclick=()=>{tool=tool===b.dataset.t?null:b.dataset.t;document.querySelectorAll('.tools button').forEach(x=>x.classList.remove('on'));if(tool)b.classList.add('on');if(dot){map.removeLayer(dot);dot=null}tmp=[];show(tool||'解除')});
 const panel=$('panel'),pinput=$('pinput');let pend=null;
+pinput.onkeydown = e=>{if(e.key==='Enter')$('pok').click();};
 $('pcancel').onclick=()=>{panel.classList.remove('show');pend=null};
 $('pok').onclick=()=>{if(!pend)return;const v=pinput.value||'';const ll=pend.ll;if(pend.t==='comment'){const m=L.marker(ll,{draggable:true,icon:L.divIcon({className:'',html:`<div class="comment-text" contenteditable="true">${v||'コメント'}</div>`,iconSize:[0,0]})}).addTo(layer);stack.push(m)}else{const isP=pend.t==='pole';const html=`<div style="width:${isP?14:16}px;height:${isP?14:16}px;border:3px solid ${isP?'#000':'red'};background:#fff;border-radius:50%"></div>`;const m=L.marker(ll,{draggable:true,icon:L.divIcon({className:'',html,iconSize:[14,14],iconAnchor:[7,7]})}).addTo(layer);if(v)m.bindTooltip(v,{permanent:true,direction:'top',offset:[0,-10],className:'pole-label'}).openTooltip();stack.push(m)}panel.classList.remove('show');pend=null};
 function open(t,ll){pend={t,ll};$('ptitle').textContent=t==='pole'?'電柱番号':t==='trans'?'トランス番号':'コメント';pinput.value=t==='pole'?$('hikikomi_basho').value:t==='trans'?$('trans_basho').value:'';panel.classList.add('show');pinput.focus()}
@@ -297,9 +300,10 @@ map.on('mouseup', e=>{
   bldStart=null;
   show('建物配置');
 });
-map.on('click',e=>{if(!tool)return;const ll=e.latlng;if(tool==='pole'||tool==='trans'||tool==='comment'){open(tool,ll);return}if(['line','hline','hikikomi'].includes(tool)){if(!tmp.length){tmp.push(ll);dot=L.circleMarker(ll,{radius:5,color:'red',fillColor:'yellow',fillOpacity:1}).addTo(map)}else{tmp.push(ll);const col={line:'#000',hline:'#7c3aed',hikikomi:'#dc2626'}[tool];const l=L.polyline(tmp,{color:col,weight:4}).addTo(layer);stack.push(l);map.removeLayer(dot);dot=null;tmp=[]}}});
+map.on('click',e=>{if(!tool)return;if(!confirm('ここに配置しますか？'))return;const ll=e.latlng;if(tool==='pole'||tool==='trans'||tool==='comment'){open(tool,ll);return}if(['line','hline','hikikomi'].includes(tool)){if(!tmp.length){tmp.push(ll);dot=L.circleMarker(ll,{radius:5,color:'red',fillColor:'yellow',fillOpacity:1}).addTo(map)}else{tmp.push(ll);const col={line:'#000',hline:'#7c3aed',hikikomi:'#dc2626'}[tool];const l=L.polyline(tmp,{color:col,weight:4}).addTo(layer);stack.push(l);map.removeLayer(dot);dot=null;tmp=[]}}});
 $('undo').onclick=()=>{const l=stack.pop();if(l)layer.removeLayer(l)};
-$('gps').onclick=()=>navigator.geolocation.getCurrentPosition(p=>map.setView([p.coords.latitude,p.coords.longitude],18));
+$('undo').oncontextmenu = (e)=>{e.preventDefault();if(confirm('すべて戻しますか？')){while(stack.length){layer.removeLayer(stack.pop());}}};
+$('gps').onclick=()=>navigator.geolocation.getCurrentPosition(p=>map.setView([p.coords.latitude,p.coords.longitude],18),()=>show('位置取得できません'),{enableHighAccuracy:true,timeout:10000});
 $('addrSearch').onclick=async()=>{
   const q=$('jusho').value.trim();
   if(!q){show('住所入力');return}
@@ -325,12 +329,15 @@ $('addrSearch').onclick=async()=>{
   }catch(e){show('検索エラー')}
 };
 
-$('save').onclick=()=>{try{const data={form:{},layers:[]};['genba','company','tanto','tanto_free','jusho','koji','kyokyu','keiyaku','amp','dv','sz','dv_len','hikikomi_basho','trans_basho','trans1','trans2','biko','juten','kensa','meter','h1','h2','h3','e1','e2','e3','e4','e5','e6'].forEach(id=>{const el=$(id);if(el)data.form[id]=el.type==='checkbox'?el.checked:el.value});layer.eachLayer(l=>{if(l.getLatLng&&l.options.icon){const html=l.options.icon.options.html||'';if(html.includes('comment-text')){data.layers.push({t:'comment',lat:l.getLatLng().lat,lng:l.getLatLng().lng,text:l.getElement().innerText})}else{const isPole=html.includes('#000');data.layers.push({t:isPole?'pole':'trans',lat:l.getLatLng().lat,lng:l.getLatLng().lng,name:l.getTooltip?l.getTooltip().getContent()||'':''})}}else if(l.getLatLngs){const pts=l.getLatLngs();const flat=(Array.isArray(pts[0])?pts[0]:pts).map(p=>[p.lat,p.lng]);data.layers.push({t:'poly',pts:flat,color:l.options.color})}});const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(data.form.genba||'genba')+'.json';a.click();show('端末に保存')}catch(e){alert(e)}};
+$('save').onclick=()=>{try{const data={form:{},layers:[]};['genba','company','tanto','tanto_free','jusho','koji','kyokyu','keiyaku','amp','dv','sz','dv_len','hikikomi_basho','trans_basho','trans1','trans2','biko','juten','kensa','meter','h1','h2','h3','e1','e2','e3','e4','e5','e6'].forEach(id=>{const el=$(id);if(el)data.form[id]=el.type==='checkbox'?el.checked:el.value});layer.eachLayer(l=>{if(l.getLatLng&&l.options.icon){const html=l.options.icon.options.html||'';if(html.includes('comment-text')){data.layers.push({t:'comment',lat:l.getLatLng().lat,lng:l.getLatLng().lng,text: l.getElement ? (l.getElement().innerText || '') : ''})}else{const isPole=html.includes('#000');data.layers.push({t:isPole?'pole':'trans',lat:l.getLatLng().lat,lng:l.getLatLng().lng,name:l.getTooltip?l.getTooltip().getContent()||'':''})}}else if(l.getLatLngs){const pts=l.getLatLngs();const flat=(Array.isArray(pts[0])?pts[0]:pts).map(p=>[p.lat,p.lng]);data.layers.push({t:'poly',pts:flat,color:l.options.color})}});const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(data.form.genba||'genba')+'.json';a.click();show('端末に保存')}catch(e){alert(e)}};
 $('load').onclick=()=>{const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=e=>{const f=e.target.files[0];const r=new FileReader();r.onload=ev=>{const d=JSON.parse(ev.target.result);Object.entries(d.form||{}).forEach(([k,v])=>{const el=$(k);if(el){if(el.type==='checkbox')el.checked=v;else el.value=v}});layer.clearLayers();stack=[];(d.layers||[]).forEach(it=>{if(it.t==='pole'||it.t==='trans'){const isP=it.t==='pole';const html=`<div style="width:${isP?14:16}px;height:${isP?14:16}px;border:3px solid ${isP?'#000':'red'};background:#fff;border-radius:50%"></div>`;const m=L.marker([it.lat,it.lng],{draggable:true,icon:L.divIcon({className:'',html,iconSize:[14,14],iconAnchor:[7,7]})}).addTo(layer);if(it.name)m.bindTooltip(it.name,{permanent:true,direction:'top',offset:[0,-10],className:'pole-label'}).openTooltip();stack.push(m)}else if(it.t==='poly'){stack.push(L.polyline(it.pts,{color:it.color,weight:4}).addTo(layer))}else if(it.t==='comment'){stack.push(L.marker([it.lat,it.lng],{draggable:true,icon:L.divIcon({className:'',html:`<div class="comment-text" contenteditable="true">${it.text}</div>`,iconSize:[0,0]})}).addTo(layer))}});show('読込完了')};r.readAsText(f)};i.click()};
 $('share').onclick=()=>{$('sharePanel').style.display='block';$('sharePanel').classList.add('show')};
-$('shareCancel').onclick=()=>{$('sharePanel').classList.remove('show');setTimeout(()=>$('sharePanel').style.display='none',200)};
-$('toLine').onclick=()=>{window.open('https://line.me/R/msg/text/?'+encodeURIComponent('【電力申請】'+$('genba').value+' '+$('jusho').value),'_blank');$('sharePanel').classList.remove('show')};
-$('toMail').onclick=()=>{location.href='mailto:?subject='+encodeURIComponent('電力申請 '+$('genba').value)+'&body='+encodeURIComponent($('jusho').value);$('sharePanel').classList.remove('show')};
+function closeShare(){$('sharePanel').classList.remove('show');setTimeout(()=>$('sharePanel').style.display='none',200);}
+$('shareCancel').onclick = () => {
+  closeShare();
+};
+$('toLine').onclick=()=>{window.open('https://line.me/R/msg/text/?'+encodeURIComponent('【電力申請】'+$('genba').value+' '+$('jusho').value),'_blank');closeShare();};
+$('toMail').onclick=()=>{location.href='mailto:?subject='+encodeURIComponent('電力申請 '+$('genba').value)+'&body='+encodeURIComponent($('jusho').value);closeShare();};
 $('screenshot').onclick=()=>{html2canvas($('map'),{useCORS:true}).then(c=>{const a=document.createElement('a');a.href=c.toDataURL();a.download=($('genba').value||'map')+'.png';a.click()})};
 $('print').onclick=()=>{sb.classList.remove('hidden');setTimeout(()=>{map.invalidateSize();window.print()},400)};
 
@@ -341,16 +348,16 @@ $('clear').onclick=()=>{if(confirm('全削除？')){layer.clearLayers();stack=[]
 $('tanto').onchange=()=>{$('tanto_free').style.display=$('tanto').value==='__edit__'?'block':'none'};
 
 const TANTO_DEFAULT=['相澤輝','相澤泰','布田','佐伯','千田','佐藤'];
-localStorage.setItem('tantoList',JSON.stringify(['相澤輝','相澤泰','布田','佐伯','千田','佐藤']));
-
-if(!localStorage.getItem('tantoList')){localStorage.setItem('tantoList',JSON.stringify(['相澤輝','相澤泰','布田','佐伯','千田','佐藤']));}
+if(!localStorage.getItem('tantoList')){
+  localStorage.setItem('tantoList', JSON.stringify(TANTO_DEFAULT));
+}
 
 function getTantoList(){return JSON.parse(localStorage.getItem('tantoList')||JSON.stringify(TANTO_DEFAULT));}
 function saveTantoList(list){localStorage.setItem('tantoList',JSON.stringify(list));}
 function refreshTanto(){const list=getTantoList();const s=$('tanto');s.innerHTML='<option value="">--選択--</option>'+list.map(n=>`<option>${n}</option>`).join('')+'<option value="__edit__">＋直接入力</option>';}
 function renderTantoList(){const list=getTantoList();const div=$('tantoList');div.innerHTML=list.map((n,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:4px;background:#fff;border:1px solid #e5e7eb;border-radius:4px;margin-bottom:3px;font-size:12px"><span>${n}</span><button data-i="${i}" class="tantoDel" style="width:40px;height:22px;background:#ef4444;color:#fff;border:none;border-radius:3px;font-size:11px">削除</button></div>`).join('');div.querySelectorAll('.tantoDel').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;const l=getTantoList();l.splice(i,1);saveTantoList(l);renderTantoList();refreshTanto();});}
 refreshTanto();
-$('tanto').onchange=()=>{$('tanto_free').style.display=$('tanto').value==='__edit__'?'block':'none'};
+
 $('tantoEditBtn').onclick=()=>{renderTantoList();$('tantoPanel').style.display='block';$('tantoNew').value='';$('tantoNew').focus();};
 $('tantoClose').onclick=()=>{$('tantoPanel').style.display='none'};
 $('tantoAdd').onclick=()=>{const v=$('tantoNew').value.trim();if(!v)return;const l=getTantoList();if(!l.includes(v)){l.push(v);saveTantoList(l);renderTantoList();refreshTanto();$('tantoNew').value='';show('追加しました');}};
