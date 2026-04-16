@@ -227,7 +227,7 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
 .inputPanel button{flex:1;height:36px;border:none;border-radius:6px;font-weight:600}
 .ok{background:#2563eb;color:#fff}.cancel{background:#e5e7eb}
 @media print{
-  @page{size:A4;margin:6mm}
+  @page{size:A4;margin:5mm}
 
   html,body{
     height:auto!important;
@@ -236,7 +236,7 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
     -webkit-print-color-adjust:exact
   }
 
-  .tools,.fab,.hint,.inputPanel,.btns,#tantoPanel{
+  .tools,.fab,.hint,.inputPanel,.btns,#tantoPanel,.tg{
     display:none!important
   }
 
@@ -247,18 +247,18 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
   .sidebar{
     width:100%!important;
     box-shadow:none!important;
-    page-break-after:auto!important;
+    page-break-after:always!important;
   }
 
   /* ===== フォーム（1ページ目）===== */
   .head{
-    padding:2mm 0;
-    margin-bottom:3mm;
+    padding:1.5mm 0;
+    margin-bottom:2.5mm;
     border-bottom:0.5mm solid #000
   }
 
   .head h1{
-    font-size:16pt;
+    font-size:15pt;
     font-weight:800
   }
 
@@ -266,31 +266,32 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
     padding:0!important;
     margin:0!important;
     font-size:11pt;
-    line-height:1.4;
-    page-break-after:always!important; /* ←これ追加 */
+    line-height:1.3;
   }
 
   .f{
-    margin-bottom:3mm
+    margin-bottom:2.3mm
   }
 
   .f label{
-    font-size:10pt;
+    font-size:9.5pt;
     font-weight:700;
-    margin-bottom:1mm
+    margin-bottom:0.7mm
   }
 
   .f input,
   .f select,
   .f textarea{
-    font-size:11pt;
-    padding:2mm;
-    border:0.3mm solid #000;
+    font-size:10.5pt;
+    padding:1.3mm 1.8mm;
+    border:0.28mm solid #000;
     border-radius:1mm;
+    height:auto;
+    line-height:1.25;
   }
 
   textarea#biko{
-    height:25mm!important
+    height:18mm!important
   }
 
   .grid2{
@@ -298,21 +299,22 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
   }
 
   .chk label{
-    font-size:10pt;
-    padding:2mm 4mm
+    font-size:9.5pt;
+    padding:1.3mm 3mm;
+    border-width:1px!important;
   }
 
   /* ===== 地図ページ（2ページ目）===== */
   .mapwrap{
     display:block!important;
     position:relative!important;
-    page-break-before:always!important; /* ←これにする */
+    page-break-before:auto!important;
   }
 
   #map{
     width:100%!important;
-    height:240mm!important;
-    margin-top:14mm; /* ←追加 */
+    height:250mm!important;
+    margin-top:20mm;
   }
 
   .map-print-header{
@@ -321,22 +323,38 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
     top:0;
     left:0;
     width:100%;
-    height:14mm;
-    padding:2mm 5mm;
+    padding:2.5mm 4mm 1.5mm;
     background:#fff;
     z-index:9999;
-    border-bottom:0.4mm solid #000;
+    border-bottom:0.5mm solid #000;
+    box-sizing:border-box;
   }
 
-  .map-print-header .main{
-    font-size:14pt;
+  .map-print-header .mph-row{
+    display:flex;
+    align-items:baseline;
+    margin-bottom:1.2mm;
+  }
+  .map-print-header .mph-label{
+    font-size:9pt;
+    font-weight:700;
+    color:#000;
+    width:16mm;
+    flex-shrink:0;
+    border:0.25mm solid #000;
+    padding:0.8mm 1.5mm;
+    background:#f3f4f6;
+    text-align:center;
+    margin-right:2.5mm;
+  }
+  .map-print-header .mph-val{
+    font-size:13pt;
     font-weight:800;
-    margin-bottom:1mm
-  }
-
-  .map-print-header .sub{
-    font-size:10.5pt;
-    font-weight:600
+    color:#000;
+    flex:1;
+    border-bottom:0.25mm solid #000;
+    padding:0.8mm 1.5mm;
+    min-height:5.5mm;
   }
 }
 </style>
@@ -363,7 +381,7 @@ html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system,BlinkMa
 <div class="grid2"><div class="f"><label>受点予定</label><input type="date" id="juten"></div><div class="f"><label>検査日</label><input type="date" id="kensa"></div></div>
 <div class="f"><label>備考</label><textarea id="biko" rows="2"></textarea></div>
 </div></div>
-<div class="mapwrap"><button class="fab" id="open">☰</button><div class="map-print-header" id="mapHeader"><div class="main"><span id="ph_genba"></span></div><div class="sub"><span id="ph_company"></span>　|　担当:<span id="ph_tanto"></span>　|　<span id="ph_jusho"></span></div></div><div id="map"></div>
+<div class="mapwrap"><button class="fab" id="open">☰</button><div class="map-print-header" id="mapHeader"><div class="mph-row"><span class="mph-label">工事名</span><span id="ph_genba" class="mph-val"></span></div><div class="mph-row"><span class="mph-label">担当者</span><span id="ph_tanto" class="mph-val"></span><span class="mph-label" style="margin-left:10mm">住所</span><span id="ph_jusho" class="mph-val"></span></div></div><div id="map"></div>
 <div class="inputPanel" id="sharePanel" style="display:none"><div style="font-weight:700;margin-bottom:8px">共有</div><button id="toLine" style="width:100%;height:40px;background:#06c755;color:#fff;border:none;border-radius:6px;margin-bottom:6px">LINE</button><button id="toMail" style="width:100%;height:40px;background:#2563eb;color:#fff;border:none;border-radius:6px;margin-bottom:6px">メール</button><button id="shareCancel" style="width:100%;height:32px;background:#e5e7eb;border:none;border-radius:6px">閉じる</button></div>
 <div class="inputPanel" id="panel"><div id="ptitle" style="font-weight:700;margin-bottom:8px;font-size:15px">入力</div><input id="pinput"><div style="display:flex;gap:6px"><button class="cancel" id="pcancel">取消</button><button class="ok" id="pok">決定</button></div></div>
 <div class="tools"><button data-t="pole">電柱</button><button data-t="trans">トランス</button><button data-t="line">低圧</button><button data-t="hline">高圧</button><button data-t="hikikomi">引込</button><button data-t="bld">建物</button><button data-t="comment">💬コメント</button><button id="undo">↩️戻る</button></div>
@@ -389,7 +407,7 @@ document.querySelectorAll('.tools button[data-t]').forEach(b=>b.onclick=()=>{too
 const panel=$('panel'),pinput=$('pinput');let pend=null;
 pinput.onkeydown = e=>{if(e.key==='Enter')$('pok').click();};
 $('pcancel').onclick=()=>{panel.classList.remove('show');pend=null};
-$('pok').onclick=()=>{if(!pend)return;const v=pinput.value||'';const ll=pend.ll;if(pend.t==='comment'){const m=L.marker(ll,{draggable:true,icon:L.divIcon({className:'',html:`<div class="comment-text" contenteditable="true">${v||'コメント'}</div>`,iconSize:[0,0]})}).addTo(layer);stack.push(m)}else{const isP=pend.t==='pole';const html=`<div style="width:${isP?14:16}px;height:${isP?14:16}px;border:3px solid ${isP?'#000':'red'};background:#fff;border-radius:50%"></div>`;const m=L.marker(ll,{draggable:true,icon:L.divIcon({className:'',html,iconSize:[14,14],iconAnchor:[7,7]})}).addTo(layer);if(v)m.bindTooltip(v,{permanent:true,direction:'top',offset:[0,-10],className:'pole-label'}).openTooltip();stack.push(m)}panel.classList.remove('show');pend=null};
+$('pok').onclick=()=>{if(!pend)return;const v=pinput.value||'';const ll=pend.ll;if(pend.t==='comment'){const m=L.marker(ll,{draggable:true,icon:L.divIcon({className:'',html:`<div class="comment-text" contenteditable="true">${v||'コメント'}</div>`,iconSize:[0,0]})}).addTo(layer);m._commentText = v || 'コメント'; m.on('add', ()=>{ const el=m.getElement(); if(el){ const ct=el.querySelector('.comment-text'); if(ct){ ct.addEventListener('input', e=>{ m._commentText = e.target.innerText; }); } } }); stack.push(m)}else{const isP=pend.t==='pole';const html=`<div style="width:${isP?14:16}px;height:${isP?14:16}px;border:3px solid ${isP?'#000':'red'};background:#fff;border-radius:50%"></div>`;const m=L.marker(ll,{draggable:true,icon:L.divIcon({className:'',html,iconSize:[14,14],iconAnchor:[7,7]})}).addTo(layer);if(v)m.bindTooltip(v,{permanent:true,direction:'top',offset:[0,-10],className:'pole-label'}).openTooltip();stack.push(m)}panel.classList.remove('show');pend=null};
 function open(t,ll){pend={t,ll};$('ptitle').textContent=t==='pole'?'電柱番号':t==='trans'?'トランス番号':'コメント';pinput.value=t==='pole'?$('hikikomi_basho').value:t==='trans'?$('trans_basho').value:'';panel.classList.add('show');pinput.focus()}
 let bldStart=null, bldRect=null;
 map.on('mousedown', e=>{
@@ -411,7 +429,7 @@ map.on('mouseup', e=>{
   bldStart=null;
   show('建物配置');
 });
-map.on('click',e=>{if(!tool)return;if(!confirm('ここに配置しますか？'))return;const ll=e.latlng;if(tool==='pole'||tool==='trans'||tool==='comment'){open(tool,ll);return}if(['line','hline','hikikomi'].includes(tool)){if(!tmp.length){tmp.push(ll);dot=L.circleMarker(ll,{radius:5,color:'red',fillColor:'yellow',fillOpacity:1}).addTo(map)}else{tmp.push(ll);const col={line:'#000',hline:'#7c3aed',hikikomi:'#dc2626'}[tool];const l=L.polyline(tmp,{color:col,weight:4}).addTo(layer);stack.push(l);map.removeLayer(dot);dot=null;tmp=[]}}});
+map.on('click',e=>{if(!tool)return;const ll=e.latlng;if(tool==='pole'||tool==='trans'||tool==='comment'){open(tool,ll);return}if(['line','hline','hikikomi'].includes(tool)){if(!tmp.length){tmp.push(ll);dot=L.circleMarker(ll,{radius:5,color:'red',fillColor:'yellow',fillOpacity:1}).addTo(map)}else{tmp.push(ll);const col={line:'#000',hline:'#7c3aed',hikikomi:'#dc2626'}[tool];const l=L.polyline(tmp,{color:col,weight:4}).addTo(layer);stack.push(l);map.removeLayer(dot);dot=null;tmp=[]}}});
 $('undo').onclick=()=>{const l=stack.pop();if(l)layer.removeLayer(l)};
 $('undo').oncontextmenu = (e)=>{e.preventDefault();if(confirm('すべて戻しますか？')){while(stack.length){layer.removeLayer(stack.pop());}}};
 $('gps').onclick=()=>navigator.geolocation.getCurrentPosition(p=>map.setView([p.coords.latitude,p.coords.longitude],18),()=>show('位置取得できません'),{enableHighAccuracy:true,timeout:10000});
@@ -440,8 +458,8 @@ $('addrSearch').onclick=async()=>{
   }catch(e){show('検索エラー')}
 };
 
-$('save').onclick=()=>{try{const data={form:{},layers:[]};['genba','company','tanto','tanto_free','jusho','koji','kyokyu','keiyaku','amp','dv','sz','dv_len','hikikomi_basho','trans_basho','trans1','trans2','biko','juten','kensa','meter','h1','h2','h3','e1','e2','e3','e4','e5','e6'].forEach(id=>{const el=$(id);if(el)data.form[id]=el.type==='checkbox'?el.checked:el.value});layer.eachLayer(l=>{if(l.getLatLng&&l.options.icon){const html=l.options.icon.options.html||'';if(html.includes('comment-text')){data.layers.push({t:'comment',lat:l.getLatLng().lat,lng:l.getLatLng().lng,text: l.getElement ? (l.getElement().innerText || '') : ''})}else{const isPole=html.includes('#000');data.layers.push({t:isPole?'pole':'trans',lat:l.getLatLng().lat,lng:l.getLatLng().lng,name:l.getTooltip?l.getTooltip().getContent()||'':''})}}else if(l.getLatLngs){const pts=l.getLatLngs();const flat=(Array.isArray(pts[0])?pts[0]:pts).map(p=>[p.lat,p.lng]);data.layers.push({t:'poly',pts:flat,color:l.options.color})}});const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(data.form.genba||'genba')+'.json';a.click();show('端末に保存')}catch(e){alert(e)}};
-$('load').onclick=()=>{const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=e=>{const f=e.target.files[0];const r=new FileReader();r.onload=ev=>{const d=JSON.parse(ev.target.result);Object.entries(d.form||{}).forEach(([k,v])=>{const el=$(k);if(el){if(el.type==='checkbox')el.checked=v;else el.value=v}});layer.clearLayers();stack=[];(d.layers||[]).forEach(it=>{if(it.t==='pole'||it.t==='trans'){const isP=it.t==='pole';const html=`<div style="width:${isP?14:16}px;height:${isP?14:16}px;border:3px solid ${isP?'#000':'red'};background:#fff;border-radius:50%"></div>`;const m=L.marker([it.lat,it.lng],{draggable:true,icon:L.divIcon({className:'',html,iconSize:[14,14],iconAnchor:[7,7]})}).addTo(layer);if(it.name)m.bindTooltip(it.name,{permanent:true,direction:'top',offset:[0,-10],className:'pole-label'}).openTooltip();stack.push(m)}else if(it.t==='poly'){stack.push(L.polyline(it.pts,{color:it.color,weight:4}).addTo(layer))}else if(it.t==='comment'){stack.push(L.marker([it.lat,it.lng],{draggable:true,icon:L.divIcon({className:'',html:`<div class="comment-text" contenteditable="true">${it.text}</div>`,iconSize:[0,0]})}).addTo(layer))}});show('読込完了')};r.readAsText(f)};i.click()};
+$('save').onclick=()=>{try{const data={form:{},layers:[]};['genba','company','tanto','tanto_free','jusho','koji','kyokyu','keiyaku','amp','dv','sz','dv_len','hikikomi_basho','trans_basho','trans1','trans2','biko','juten','kensa','meter','h1','h2','h3','e1','e2','e3','e4','e5','e6'].forEach(id=>{const el=$(id);if(el)data.form[id]=el.type==='checkbox'?el.checked:el.value});layer.eachLayer(l=>{if(l.getLatLng&&l.options.icon){const html=l.options.icon.options.html||'';if(html.includes('comment-text')){data.layers.push({t:'comment',lat:l.getLatLng().lat,lng:l.getLatLng().lng,text: l._commentText || ''})}else{const isPole=html.includes('#000');data.layers.push({t:isPole?'pole':'trans',lat:l.getLatLng().lat,lng:l.getLatLng().lng,name:l.getTooltip?l.getTooltip().getContent()||'':''})}}else if(l.getLatLngs){const pts=l.getLatLngs();const flat=(Array.isArray(pts[0])?pts[0]:pts).map(p=>[p.lat,p.lng]);data.layers.push({t:'poly',pts:flat,color:l.options.color})}});const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download = (data.form.genba||'申請') + '_' + new Date().toISOString().slice(0,10) + '.json';a.click();show('端末に保存')}catch(e){alert(e)}};
+$('load').onclick=()=>{const i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=e=>{const f=e.target.files[0];const r=new FileReader();r.onload=ev=>{const d=JSON.parse(ev.target.result);Object.entries(d.form||{}).forEach(([k,v])=>{const el=$(k);if(el){if(el.type==='checkbox')el.checked=v;else el.value=v}});layer.clearLayers();stack=[];(d.layers||[]).forEach(it=>{if(it.t==='pole'||it.t==='trans'){const isP=it.t==='pole';const html=`<div style="width:${isP?14:16}px;height:${isP?14:16}px;border:3px solid ${isP?'#000':'red'};background:#fff;border-radius:50%"></div>`;const m=L.marker([it.lat,it.lng],{draggable:true,icon:L.divIcon({className:'',html,iconSize:[14,14],iconAnchor:[7,7]})}).addTo(layer);if(it.name)m.bindTooltip(it.name,{permanent:true,direction:'top',offset:[0,-10],className:'pole-label'}).openTooltip();stack.push(m)}else if(it.t==='poly'){stack.push(L.polyline(it.pts,{color:it.color,weight:4}).addTo(layer))}else if(it.t==='comment'){const m=L.marker([it.lat,it.lng],{draggable:true,icon:L.divIcon({className:'',html:`<div class="comment-text" contenteditable="true">${it.text}</div>`,iconSize:[0,0]})}).addTo(layer);m._commentText = it.text || ''; m.on('add', ()=>{ const el=m.getElement(); if(el){ const ct=el.querySelector('.comment-text'); if(ct){ ct.addEventListener('input', e=>{ m._commentText = e.target.innerText; }); } } }); stack.push(m)}});show('読込完了')};r.readAsText(f)};i.click()};
 $('share').onclick=()=>{$('sharePanel').style.display='block';$('sharePanel').classList.add('show')};
 function closeShare(){$('sharePanel').classList.remove('show');setTimeout(()=>$('sharePanel').style.display='none',200);}
 $('shareCancel').onclick = () => {
@@ -450,6 +468,21 @@ $('shareCancel').onclick = () => {
 $('toLine').onclick=()=>{window.open('https://line.me/R/msg/text/?'+encodeURIComponent('【電力申請】'+$('genba').value+' '+$('jusho').value),'_blank');closeShare();};
 $('toMail').onclick=()=>{location.href='mailto:?subject='+encodeURIComponent('電力申請 '+$('genba').value)+'&body='+encodeURIComponent($('jusho').value);closeShare();};
 $('screenshot').onclick=()=>{html2canvas($('map'),{useCORS:true}).then(c=>{const a=document.createElement('a');a.href=c.toDataURL();a.download=($('genba').value||'map')+'.png';a.click()})};
+
+$('print').onclick=()=>{
+  // 1枚目:フォーム、2枚目:地図ヘッダーに情報反映
+  try {
+    $('ph_genba').textContent = $('genba').value || '';
+    const tantoVal = $('tanto').value === '__edit__' ? $('tanto_free').value : $('tanto').value;
+    $('ph_tanto').textContent = tantoVal || '';
+    $('ph_jusho').textContent = $('jusho').value || '';
+  } catch(e) { console.log(e) }
+  // サイドバー開いて地図再描画
+  sb.classList.remove('hidden');
+  map.invalidateSize();
+  // 少し待って印刷（iOS対策）
+  setTimeout(()=>{ window.print(); }, 500);
+};
 
 
 $('clear').onclick=()=>{if(confirm('全削除？')){layer.clearLayers();stack=[]}};
